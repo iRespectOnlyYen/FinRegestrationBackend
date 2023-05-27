@@ -1,18 +1,18 @@
-from django.shortcuts import render
-from rest_framework import generics, viewsets
-from rest_framework.response import Response
-
-from .serializers import PersonSerializer
-from .models import Person
-# Create your views here.
+from rest_framework import generics
+from .models import User, SchoolBoy, Teacher
+from .serializers import UserSerializer, SchoolBoySerializer, TeacherSerializer
 
 
-class PersonViewSet(viewsets.ViewSet):
-    serializer_class = PersonSerializer
+class UserCreateView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def create(self, request):
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+
+class SchoolBoyCreateView(generics.CreateAPIView):
+    queryset = SchoolBoy.objects.all()
+    serializer_class = SchoolBoySerializer
+
+
+class TeacherCreateView(generics.CreateAPIView):
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherSerializer
